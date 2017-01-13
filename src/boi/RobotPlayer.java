@@ -1,33 +1,49 @@
 package boi;
-import battlecode.common.*;
-import boi.Units.*;
 
+import battlecode.common.GameActionException;
+import battlecode.common.RobotController;
+import boi.units.*;
+
+@SuppressWarnings("unused")
 public strictfp class RobotPlayer {
-    static RobotController rc;
 
     public static void run(RobotController rc) throws GameActionException {
-
-        RobotPlayer.rc = rc;
-
+        Unit thisUnit;
         switch (rc.getType()) {
             case ARCHON:
-                Archon.run(rc);
+                thisUnit = new Archon(rc);
                 break;
             case GARDENER:
-                Gardener.run(rc);
+                thisUnit = new Gardener(rc);
                 break;
             case SOLDIER:
-                Soldier.run(rc);
+                thisUnit = new Soldier(rc);
                 break;
             case LUMBERJACK:
-                Lumberjack.run(rc);
+                thisUnit = new Lumberjack(rc);
                 break;
             case SCOUT:
-                Scout.run(rc);
+                thisUnit = new Scout(rc);
                 break;
             case TANK:
-                Tank.run(rc);
+                thisUnit = new Tank(rc);
                 break;
+            default:
+                throw new IllegalArgumentException("Unknown robot type: " + rc.getType());
+        }
+
+        try {
+            thisUnit.lifetime();
+        } catch (Exception e) {
+            System.err.println("Error during lifetime");
+            e.printStackTrace();
+        } finally {
+            try {
+                thisUnit.destroy();
+            } catch (Exception e) {
+                System.err.println("Error during destruction");
+                e.printStackTrace();
+            }
         }
     }
 }
