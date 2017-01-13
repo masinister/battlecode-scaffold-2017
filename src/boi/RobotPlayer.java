@@ -1,5 +1,6 @@
-package boi.Units;
+package boi;
 import battlecode.common.*;
+import boi.Units.*;
 
 public strictfp class RobotPlayer {
     static RobotController rc;
