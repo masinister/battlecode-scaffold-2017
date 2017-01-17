@@ -12,21 +12,14 @@ public class Archon extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        MapLocation target = null;
-        while (target == null) {
-            MapLocation[] broadcasts = mController.senseBroadcastingRobotLocations();
-            if (broadcasts.length > 0)
-                target = broadcasts[0];
+        if (mController.getTeamBullets() > 200) {
+            float dir = 0;
+            while (!mController.canHireGardener(new Direction(dir)))
+                dir += Math.PI / 10F;
+            mController.hireGardener(new Direction(dir));
         }
-        Behavior behavior = new BehaviorMove(this, target.x, target.y);
-        while (!behavior.isDone()) {
-            if (behavior.next())
-                Clock.yield();
-            mController.setIndicatorDot(target, 255, 0, 0);
-        }
-        behavior.destroy();
         while (true) {
-            mController.setIndicatorDot(target, 255, 0, 0);
+            Clock.yield();
         }
     }
 }

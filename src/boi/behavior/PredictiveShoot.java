@@ -11,7 +11,7 @@ public strictfp class PredictiveShoot extends Behavior{
     private RobotInfo target;
     private MapLocation current,last,me;
     float bulletSpeed;
-
+    int ID;
     /**
      * Basic (possibly not working) predictive shooting
      */
@@ -23,6 +23,7 @@ public strictfp class PredictiveShoot extends Behavior{
         current=target.getLocation();
         last=target.getLocation();
         bulletSpeed=mController.getType().bulletSpeed;
+        ID=target.getID();
     }
 
     /**
@@ -51,7 +52,7 @@ public strictfp class PredictiveShoot extends Behavior{
 
     @Override
     public boolean isDone() throws Exception {
-        return target.getHealth()==0;
+        return mController.canSenseRobot(ID);
     }
 
     @Override
