@@ -6,9 +6,11 @@ import boi.units.Unit;
 public abstract class Behavior {
 
     protected final RobotController mController;
+    protected final Unit unit;
 
     protected Behavior(Unit actor) {
         mController = actor.getController();
+        unit = actor;
     }
 
     // return true if the next step may be performed during the current turn, otherwise false

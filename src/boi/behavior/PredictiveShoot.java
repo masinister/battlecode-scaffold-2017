@@ -30,6 +30,7 @@ public strictfp class PredictiveShoot extends Behavior{
      */
     @Override
     public boolean next() throws Exception {
+        me=mController.getLocation();
         last = new MapLocation(current.x,current.y);
         current = target.getLocation();
 

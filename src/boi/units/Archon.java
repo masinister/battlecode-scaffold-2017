@@ -1,6 +1,7 @@
 package boi.units;
 
 import battlecode.common.*;
+import boi.behavior.Archon1;
 import boi.behavior.Behavior;
 import boi.behavior.BehaviorMove;
 
@@ -12,21 +13,18 @@ public class Archon extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        MapLocation target = null;
-        while (target == null) {
-            MapLocation[] broadcasts = mController.senseBroadcastingRobotLocations();
-            if (broadcasts.length > 0)
-                target = broadcasts[0];
+        float g = 0;
+        while (!mController.canHireGardener(new Direction(g))){
+            g+=0.1;
         }
-        Behavior behavior = new BehaviorMove(this, target.x, target.y);
-        while (!behavior.isDone()) {
-            if (behavior.next())
+        mController.hireGardener(new Direction(g));
+
+        Behavior archon = new Archon1(this);
+
+        while (!archon.isDone()){
+            if (archon.next())
                 Clock.yield();
-            mController.setIndicatorDot(target, 255, 0, 0);
         }
-        behavior.destroy();
-        while (true) {
-            mController.setIndicatorDot(target, 255, 0, 0);
-        }
+        archon.destroy();
     }
 }
