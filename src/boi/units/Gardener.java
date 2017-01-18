@@ -15,10 +15,17 @@ public class Gardener extends Unit {
     public void lifetime() throws Exception {
         while (true) {
             float dir = 0;
-            while (!mController.canBuildRobot(RobotType.SOLDIER, new Direction(dir)))
+            while (!mController.canBuildRobot(RobotType.SCOUT, new Direction(dir)))
                 dir += Math.PI / 10F;
-            mController.buildRobot(RobotType.SOLDIER, new Direction(dir));
+            mController.buildRobot(RobotType.SCOUT, new Direction(dir));
             Clock.yield();
         }
+//        while (true) {
+//            float dir = 0;
+//            while (!mController.canBuildRobot(RobotType.SOLDIER, new Direction(dir)))
+//                dir += Math.PI / 10F;
+//            mController.buildRobot(RobotType.SOLDIER, new Direction(dir));
+//            Clock.yield();
+//        }
     }
 }

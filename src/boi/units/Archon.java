@@ -1,6 +1,7 @@
 package boi.units;
 
 import battlecode.common.*;
+import boi.behavior.Archon1;
 import boi.behavior.Behavior;
 import boi.behavior.BehaviorMove;
 
@@ -18,8 +19,13 @@ public class Archon extends Unit {
                 dir += Math.PI / 10F;
             mController.hireGardener(new Direction(dir));
         }
+        Behavior archon = new Archon1(this);
         while (true) {
-            Clock.yield();
+            while (!archon.isDone()) {
+                if (archon.next()) {
+                    Clock.yield();
+                }
+            }
         }
     }
 }
