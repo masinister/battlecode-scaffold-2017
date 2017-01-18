@@ -1,20 +1,16 @@
 package boi.behavior;
 
 import battlecode.common.Direction;
-import battlecode.common.GameActionException;
-import boi.units.Unit;
+import battlecode.common.RobotController;
 
-/**
- * Created by mason on 1/17/2017.
- */
 public class TryMoveDirection extends Behavior {
 
-    Direction dir;
-    float degreeOffset;
-    int checksPerSide;
+    private Direction dir;
+    private float degreeOffset;
+    private int checksPerSide;
 
-    public TryMoveDirection(Unit actor, Direction dir, float degreeOffset, int checksPerSide) {
-        super(actor);
+    public TryMoveDirection(RobotController controller, Direction dir, float degreeOffset, int checksPerSide) {
+        super(controller);
         this.dir=dir;
         this.degreeOffset=degreeOffset;
         this.checksPerSide=checksPerSide;

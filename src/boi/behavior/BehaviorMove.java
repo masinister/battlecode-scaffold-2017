@@ -1,8 +1,6 @@
 package boi.behavior;
 
-import battlecode.common.Direction;
-import battlecode.common.MapLocation;
-import boi.units.Unit;
+import battlecode.common.*;
 
 public strictfp class BehaviorMove extends Behavior {
 
@@ -10,8 +8,8 @@ public strictfp class BehaviorMove extends Behavior {
     private final MapLocation mTarget;
     private float mInterval;
 
-    public BehaviorMove(Unit actor, float targetX, float targetY) {
-        super(actor);
+    public BehaviorMove(RobotController controller, float targetX, float targetY) {
+        super(controller);
         mTarget = new MapLocation(targetX, targetY);
     }
 

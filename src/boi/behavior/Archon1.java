@@ -1,20 +1,17 @@
 package boi.behavior;
 
 import battlecode.common.Direction;
-import boi.units.Unit;
+import battlecode.common.RobotController;
 
-/**
- * Created by mason on 1/17/2017.
- */
 public class Archon1 extends Behavior {
 
-    public Archon1(Unit actor) {
-        super(actor);
+    public Archon1(RobotController controller) {
+        super(controller);
     }
 
     @Override
     public boolean next() throws Exception {
-        Behavior randomMove = new TryMoveDirection(unit, new Direction((float) (Math.random()*2*Math.PI)),90,2);
+        Behavior randomMove = new TryMoveDirection(mController, new Direction((float) (Math.random() * 2 * Math.PI)), 90, 2);
         return randomMove.next();
     }
 

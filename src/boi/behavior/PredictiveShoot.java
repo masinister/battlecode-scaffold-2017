@@ -1,23 +1,19 @@
 package boi.behavior;
 
 import battlecode.common.*;
-import boi.units.Unit;
 
-/**
- * Created by mason on 1/13/2017.
- */
 public strictfp class PredictiveShoot extends Behavior{
 
+    private float bulletSpeed;
     private RobotInfo target;
     private MapLocation current,last,me;
-    float bulletSpeed;
 
     /**
      * Basic (possibly not working) predictive shooting
      */
 
-    public PredictiveShoot(Unit actor, RobotInfo targetRobot) {
-        super(actor);
+    public PredictiveShoot(RobotController controller, RobotInfo targetRobot) {
+        super(controller);
         target=targetRobot;
         me=mController.getLocation();
         current=target.getLocation();
