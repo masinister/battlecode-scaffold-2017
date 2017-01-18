@@ -13,13 +13,11 @@ public class Gardener extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-//        if (mController.readBroadcast(0) == 10) {
-//            Behavior produce = new
-//        }
-        Behavior circleGardener = new CircleGardener(this);
+        Behavior circleGardener = new CircleGardener(mController);
         while (!circleGardener.isDone()){
-            if(circleGardener.next())
-                Clock.yield();
+            while (circleGardener.canStep())
+                circleGardener.step();
+            Clock.yield();
         }
         circleGardener.destroy();
     }

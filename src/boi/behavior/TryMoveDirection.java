@@ -1,63 +1,64 @@
 package boi.behavior;
 
 import battlecode.common.Direction;
-import battlecode.common.GameActionException;
-import boi.units.Unit;
+import battlecode.common.RobotController;
 
-/**
- * Created by mason on 1/17/2017.
- */
-public class TryMoveDirection extends Behavior {
+public class TryMoveDirection extends RepeatableBehavior {
 
-    Direction dir;
-    float degreeOffset;
-    int checksPerSide;
+    protected Direction dir;
+    private float degreeOffset;
+    private int checksPerSide;
+    private boolean moved;
 
-    public TryMoveDirection(Unit actor, Direction dir, float degreeOffset, int checksPerSide) {
-        super(actor);
+    public TryMoveDirection(RobotController controller, Direction dir, float degreeOffset, int checksPerSide) {
+        super(controller);
         this.dir=dir;
         this.degreeOffset=degreeOffset;
         this.checksPerSide=checksPerSide;
     }
 
     @Override
-    public boolean next() throws Exception {
+    public void step() throws Exception {
             // First, try intended direction
             if (mController.canMove(dir)) {
                 mController.move(dir);
-                return true;
+                moved = true;
+                return;
             }
 
             // Now try a bunch of similar angles
-            boolean moved = false;
             int currentCheck = 1;
 
             while(currentCheck<=checksPerSide) {
                 // Try the offset of the left side
                 if(mController.canMove(dir.rotateLeftDegrees(degreeOffset*currentCheck))) {
                     mController.move(dir.rotateLeftDegrees(degreeOffset*currentCheck));
-                    return true;
+                    moved = true;
+                    return;
                 }
                 // Try the offset on the right side
                 if(mController.canMove(dir.rotateRightDegrees(degreeOffset*currentCheck))) {
                     mController.move(dir.rotateRightDegrees(degreeOffset*currentCheck));
-                    return true;
+                    moved = true;
+                    return;
                 }
                 // No move performed, try slightly further
                 currentCheck++;
             }
-
-            // A move never happened, so return false.
-            return false;
     }
 
     @Override
-    public boolean isDone() throws Exception {
-        return false;
+    public boolean canStep() {
+        return !(moved || mController.hasMoved());
     }
 
     @Override
-    public void destroy() throws Exception {
+    public boolean isDone() {
+        return moved;
+    }
 
+    @Override
+    public void reset() {
+        moved = false;
     }
 }

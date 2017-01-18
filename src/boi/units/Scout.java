@@ -2,8 +2,8 @@ package boi.units;
 
 import battlecode.common.Clock;
 import battlecode.common.RobotController;
-import boi.behavior.Behavior;
-import boi.behavior.Scouting;
+import boi.behavior.Repeat;
+import boi.behavior.TryMoveRandomDirection;
 
 public class Scout extends Unit {
 
@@ -13,13 +13,13 @@ public class Scout extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        Behavior scout = new Scouting(this);
-        while (!scout.isDone()) {
-            if (scout.next())
-                Clock.yield();
+        Repeat scram = new Repeat(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
+
+        while (!scram.isDone()) {
+            scram.step();
+            Clock.yield();
         }
-        while (true) {
-//            Clock.yield();
-        }
+        scram.destroy();
     }
+
 }

@@ -1,36 +1,31 @@
 package boi.behavior;
 
 import battlecode.common.*;
-import boi.units.Unit;
 
-/**
- * Created by mason on 1/13/2017.
- */
 public strictfp class PredictiveShoot extends Behavior{
 
+    private float bulletSpeed;
     private RobotInfo target;
     private MapLocation current,last,me;
-    float bulletSpeed;
-    int ID;
+
     /**
      * Basic (possibly not working) predictive shooting
      */
 
-    public PredictiveShoot(Unit actor, RobotInfo targetRobot) {
-        super(actor);
+    public PredictiveShoot(RobotController controller, RobotInfo targetRobot) {
+        super(controller);
         target=targetRobot;
         me=mController.getLocation();
         current=target.getLocation();
         last=target.getLocation();
         bulletSpeed=mController.getType().bulletSpeed;
-        ID=target.getID();
     }
 
     /**
      * The first shot is not predictive because it needs 2 turns to calculate velocity based on position
      */
     @Override
-    public boolean next() throws Exception {
+    public void step() throws Exception {
         me=mController.getLocation();
         last = new MapLocation(current.x,current.y);
         current = target.getLocation();
@@ -47,15 +42,15 @@ public strictfp class PredictiveShoot extends Behavior{
             System.out.println("pew ");
             mController.fireSingleShot(new Direction(theta));
         }
-        return true;
     }
 
     @Override
-    public boolean isDone() throws Exception {
-        return mController.canSenseRobot(ID);
+    public boolean canStep() {
+        return !mController.hasAttacked();
     }
 
     @Override
-    public void destroy() throws Exception {
+    public boolean isDone() {
+        return target.getHealth()==0;
     }
 }

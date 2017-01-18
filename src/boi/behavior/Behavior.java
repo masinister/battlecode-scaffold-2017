@@ -1,24 +1,26 @@
 package boi.behavior;
 
 import battlecode.common.RobotController;
-import boi.units.Unit;
 
 public abstract class Behavior {
 
     protected final RobotController mController;
-    protected final Unit unit;
 
-    protected Behavior(Unit actor) {
-        mController = actor.getController();
-        unit = actor;
+    protected Behavior(RobotController controller) {
+        mController = controller;
     }
 
-    // return true if the next step may be performed during the current turn, otherwise false
-    public abstract boolean next() throws Exception;
+    public abstract void step() throws Exception;
 
-    public abstract boolean isDone() throws Exception;
+    public boolean canStep() {
+        return !isDone();
+    }
 
-    public abstract void destroy() throws Exception;
+    public boolean isDone() {
+        return false;
+    }
+
+    public void destroy() throws Exception {}
 
     // Todo: add mechanism for polling success
 }

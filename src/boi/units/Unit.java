@@ -13,8 +13,4 @@ public abstract class Unit {
     public void lifetime() throws Exception {}
 
     public void destroy() throws Exception {}
-
-    public RobotController getController() {
-        return mController;
-    }
 }

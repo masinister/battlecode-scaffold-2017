@@ -1,46 +1,44 @@
 package boi.behavior;
 
 import battlecode.common.*;
-import boi.units.Unit;
 
 import java.util.ArrayList;
 
-/**
- * Created by mason on 1/17/2017.
- */
 public class CircleGardener extends Behavior {
 
-    boolean alone=false;
-    float theta=0;
-    float meme=0;
+    ArrayList<TreeInfo> myTrees = new ArrayList<>();
+    private boolean alone = false;
+    private float theta = 0;
+    private float meme = 0;
 
-    public CircleGardener(Unit actor) {
-        super(actor);
+    public CircleGardener(RobotController controller) {
+        super(controller);
     }
 
-    ArrayList<TreeInfo> myTrees = new ArrayList<>();
-
     @Override
-    public boolean next() throws Exception {
-//        RobotInfo[] robots = mController.senseNearbyRobots();
-//        if(robots.length>0 && !alone){
-//            Behavior tryMove = new TryMoveDirection(unit, robots[0].getLocation().directionTo(mController.getLocation()),20,3);
-//            alone=true;
-//            return tryMove.next();
-//        }
+    public void step() throws Exception {
+        RobotInfo[] robots = mController.senseNearbyRobots();
+        if(robots.length>0 && !alone){
+            Behavior tryMove = new TryMoveDirection(mController, robots[0].getLocation().directionTo(mController.getLocation()), 20, 3);
+            alone=true;
+            tryMove.step();
+        }
 
-        theta = 0;
         if(mController.hasTreeBuildRequirements()) {
-            while (theta <= 2 * Math.PI) {
+            while (theta < 2 * Math.PI) {
+                theta += .01;
                 if (mController.canPlantTree(new Direction(theta))) {
                     mController.plantTree(new Direction(theta));
                     break;
                 }
-                theta += Math.PI / 3.0;
             }
         }
 
         TreeInfo[] trees = mController.senseNearbyTrees();
+
+        if(trees.length<5)
+            theta=0;
+
         for(TreeInfo tree : trees){
             if(tree.getHealth()<tree.getMaxHealth()-GameConstants.WATER_HEALTH_REGEN_RATE && mController.canWater(tree.getID()))
                 mController.water(tree.getID());
@@ -48,19 +46,8 @@ public class CircleGardener extends Behavior {
                 mController.shake(tree.getID());
         }
 
-        if(mController.canBuildRobot(RobotType.SCOUT, new Direction(meme)))
-            mController.buildRobot(RobotType.SCOUT, new Direction(meme));
-        else meme += .01;
-        return true;
-    }
-
-    @Override
-    public boolean isDone() throws Exception {
-        return false;
-    }
-
-    @Override
-    public void destroy() throws Exception {
-
+        if(mController.canBuildRobot(RobotType.SCOUT,new Direction(meme)))
+            mController.buildRobot(RobotType.SCOUT,new Direction(meme));
+        else meme+=.01;
     }
 }
