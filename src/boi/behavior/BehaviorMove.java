@@ -14,7 +14,7 @@ public strictfp class BehaviorMove extends Behavior {
     }
 
     @Override
-    public boolean next() throws Exception {
+    public void step() throws Exception {
         if (!mController.hasMoved()) {
             MapLocation current = mController.getLocation();
             float remaining = current.distanceTo(mTarget);
@@ -32,18 +32,16 @@ public strictfp class BehaviorMove extends Behavior {
                     mInterval = DEGREE_INTERVAL;
                 } else mInterval /= 2;
             } else mController.move(mTarget);
-
-            return true;
-        } else return false;
+        }
     }
 
     @Override
-    public boolean isDone() throws Exception {
+    public boolean canStep() {
+        return !(mController.hasMoved() || isDone());
+    }
+
+    @Override
+    public boolean isDone() {
         return mTarget.distanceTo(mController.getLocation()) == 0;
-    }
-
-    @Override
-    public void destroy() throws Exception {
-
     }
 }

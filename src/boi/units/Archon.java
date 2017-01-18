@@ -1,8 +1,8 @@
 package boi.units;
 
 import battlecode.common.*;
-import boi.behavior.Archon1;
-import boi.behavior.Behavior;
+import boi.behavior.Repeat;
+import boi.behavior.TryMoveRandomDirection;
 
 public class Archon extends Unit {
 
@@ -18,12 +18,13 @@ public class Archon extends Unit {
         }
         mController.hireGardener(new Direction(g));
 
-        Behavior archon = new Archon1(mController);
+        Repeat scram = new Repeat(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
 
-        while (!archon.isDone()){
-            if (archon.next())
-                Clock.yield();
+        while (!scram.isDone()) {
+            while (scram.canStep())
+                scram.step();
+            Clock.yield();
         }
-        archon.destroy();
+        scram.destroy();
     }
 }

@@ -10,12 +10,17 @@ public abstract class Behavior {
         mController = controller;
     }
 
-    // return true if the next step may be performed during the current turn, otherwise false
-    public abstract boolean next() throws Exception;
+    public abstract void step() throws Exception;
 
-    public abstract boolean isDone() throws Exception;
+    public boolean canStep() {
+        return !isDone();
+    }
 
-    public abstract void destroy() throws Exception;
+    public boolean isDone() {
+        return false;
+    }
+
+    public void destroy() throws Exception {}
 
     // Todo: add mechanism for polling success
 }

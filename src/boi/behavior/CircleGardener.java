@@ -16,12 +16,12 @@ public class CircleGardener extends Behavior {
     }
 
     @Override
-    public boolean next() throws Exception {
+    public void step() throws Exception {
         RobotInfo[] robots = mController.senseNearbyRobots();
         if(robots.length>0 && !alone){
             Behavior tryMove = new TryMoveDirection(mController, robots[0].getLocation().directionTo(mController.getLocation()), 20, 3);
             alone=true;
-            return tryMove.next();
+            tryMove.step();
         }
 
         if(mController.hasTreeBuildRequirements()) {
@@ -49,16 +49,5 @@ public class CircleGardener extends Behavior {
         if(mController.canBuildRobot(RobotType.SCOUT,new Direction(meme)))
             mController.buildRobot(RobotType.SCOUT,new Direction(meme));
         else meme+=.01;
-        return true;
-    }
-
-    @Override
-    public boolean isDone() throws Exception {
-        return false;
-    }
-
-    @Override
-    public void destroy() throws Exception {
-
     }
 }
