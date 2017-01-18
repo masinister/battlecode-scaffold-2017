@@ -7,25 +7,36 @@ import boi.behavior.BehaviorMove;
 
 public class Archon extends Unit {
 
+    private boolean builder = false;
+
     public Archon(RobotController rc) {
         super(rc);
     }
 
     @Override
     public void lifetime() throws Exception {
-        if (mController.getTeamBullets() > 200) {
-            float dir = 0;
-            while (!mController.canHireGardener(new Direction(dir)))
-                dir += Math.PI / 10F;
-            mController.hireGardener(new Direction(dir));
+        float g = 0;
+        while (!mController.canHireGardener(new Direction(g))) {
+            g += 0.1;
         }
-        Behavior archon = new Archon1(this);
-        while (true) {
-            while (!archon.isDone()) {
-                if (archon.next()) {
-                    Clock.yield();
-                }
+        mController.hireGardener(new Direction(g));
+
+        if (mController.getTeamBullets() == 400 && !builder) {
+            g = 0;
+            while (!mController.canHireGardener(new Direction(g))) {
+                g += 0.1;
             }
+            mController.hireGardener(new Direction(g));
+            mController.broadcast(0, 10);
+            builder = true;
         }
+
+        Behavior archon = new Archon1(this);
+
+        while (!archon.isDone()) {
+            if (archon.next())
+                Clock.yield();
+        }
+        archon.destroy();
     }
 }

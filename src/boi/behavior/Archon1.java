@@ -1,21 +1,21 @@
 package boi.behavior;
 
+import battlecode.common.Direction;
 import boi.units.Unit;
 
 /**
- * Created by douwz on 1/16/2017.
+ * Created by mason on 1/17/2017.
  */
 public class Archon1 extends Behavior {
 
-    float dir = (float) Math.PI / 4F;
-
-    public Archon1(Unit u) {
-        super(u);
+    public Archon1(Unit actor) {
+        super(actor);
     }
+
     @Override
     public boolean next() throws Exception {
-
-        return false;
+        Behavior randomMove = new TryMoveDirection(unit, Direction.getWest(),90,2);
+        return randomMove.next();
     }
 
     @Override

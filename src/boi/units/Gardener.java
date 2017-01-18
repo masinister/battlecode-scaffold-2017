@@ -1,9 +1,9 @@
 package boi.units;
 
 import battlecode.common.Clock;
-import battlecode.common.Direction;
 import battlecode.common.RobotController;
-import battlecode.common.RobotType;
+import boi.behavior.Behavior;
+import boi.behavior.CircleGardener;
 
 public class Gardener extends Unit {
 
@@ -13,19 +13,14 @@ public class Gardener extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        while (true) {
-            float dir = 0;
-            while (!mController.canBuildRobot(RobotType.SCOUT, new Direction(dir)))
-                dir += Math.PI / 10F;
-            mController.buildRobot(RobotType.SCOUT, new Direction(dir));
-            Clock.yield();
-        }
-//        while (true) {
-//            float dir = 0;
-//            while (!mController.canBuildRobot(RobotType.SOLDIER, new Direction(dir)))
-//                dir += Math.PI / 10F;
-//            mController.buildRobot(RobotType.SOLDIER, new Direction(dir));
-//            Clock.yield();
+//        if (mController.readBroadcast(0) == 10) {
+//            Behavior produce = new
 //        }
+        Behavior circleGardener = new CircleGardener(this);
+        while (!circleGardener.isDone()){
+            if(circleGardener.next())
+                Clock.yield();
+        }
+        circleGardener.destroy();
     }
 }
