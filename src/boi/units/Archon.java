@@ -1,7 +1,9 @@
 package boi.units;
 
 import battlecode.common.*;
-import boi.behavior.*;
+import boi.behavior.Multitask;
+import boi.behavior.Repeat;
+import boi.behavior.build.Spawn;
 import boi.behavior.move.TryMoveRandomDirection;
 
 public class Archon extends Unit {
