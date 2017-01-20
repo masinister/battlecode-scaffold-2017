@@ -3,7 +3,7 @@ package boi.units;
 import battlecode.common.Clock;
 import battlecode.common.RobotController;
 import boi.behavior.Repeat;
-import boi.behavior.TryMoveRandomDirection;
+import boi.behavior.move.TryMoveRandomDirection;
 
 public class Scout extends Unit {
 

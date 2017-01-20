@@ -1,6 +1,7 @@
-package boi.behavior;
+package boi.behavior.move;
 
 import battlecode.common.*;
+import boi.behavior.Behavior;
 
 public strictfp class BehaviorMove extends Behavior {
 
