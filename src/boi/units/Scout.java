@@ -13,7 +13,7 @@ public class Scout extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        Repeat scram = new Repeat(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
+        Repeat scram = new Repeat<>(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
 
         while (!scram.isDone()) {
             scram.step();
