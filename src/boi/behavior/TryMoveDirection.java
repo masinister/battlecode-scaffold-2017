@@ -2,7 +2,7 @@ package boi.behavior;
 
 import battlecode.common.*;
 
-public class TryMoveDirection extends RepeatableBehavior {
+public class TryMoveDirection extends Behavior implements Repeatable {
 
     protected Direction dir;
     private float degreeOffset;

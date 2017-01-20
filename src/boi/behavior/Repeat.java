@@ -3,15 +3,15 @@ package boi.behavior;
 import battlecode.common.GameActionException;
 import battlecode.common.RobotController;
 
-public class Repeat extends RepeatableBehavior {
+public class Repeat<B extends Behavior & Repeatable> extends Behavior implements Repeatable {
 
     public static final int FOREVER = -1;
 
-    private final RepeatableBehavior mBehavior;
+    private final B mBehavior;
     private final int mTimes;
     private int mCount;
 
-    public Repeat(RobotController controller, RepeatableBehavior b, int times) {
+    public Repeat(RobotController controller, B b, int times) {
         super(controller);
         mBehavior = b;
         mTimes = times;
