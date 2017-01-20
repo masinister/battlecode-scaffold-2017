@@ -1,7 +1,6 @@
 package boi.behavior;
 
-import battlecode.common.Direction;
-import battlecode.common.RobotController;
+import battlecode.common.*;
 
 public class TryMoveDirection extends RepeatableBehavior {
 
@@ -18,7 +17,7 @@ public class TryMoveDirection extends RepeatableBehavior {
     }
 
     @Override
-    public void step() throws Exception {
+    public void step() throws GameActionException {
             // First, try intended direction
             if (mController.canMove(dir)) {
                 mController.move(dir);

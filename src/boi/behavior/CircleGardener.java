@@ -16,7 +16,7 @@ public class CircleGardener extends Behavior {
     }
 
     @Override
-    public void step() throws Exception {
+    public void step() throws GameActionException {
         RobotInfo[] robots = mController.senseNearbyRobots();
         if(robots.length>0 && !alone){
             Behavior tryMove = new TryMoveDirection(mController, robots[0].getLocation().directionTo(mController.getLocation()), 20, 3);

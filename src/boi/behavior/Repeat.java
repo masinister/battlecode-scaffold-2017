@@ -1,5 +1,6 @@
 package boi.behavior;
 
+import battlecode.common.GameActionException;
 import battlecode.common.RobotController;
 
 public class Repeat extends RepeatableBehavior {
@@ -18,14 +19,16 @@ public class Repeat extends RepeatableBehavior {
     }
 
     @Override
-    public void step() throws Exception {
-        if (!isDone()) {
-            if (mBehavior.canStep())
-                mBehavior.step();
-            if (mBehavior.isDone())
-                if (mTimes < 0 || ++mCount < mTimes)
-                    mBehavior.reset();
-        } else throw new IllegalStateException("I should be done");
+    public void step() throws GameActionException {
+        mBehavior.step();
+        if (mBehavior.isDone())
+            if (mTimes < 0 || ++mCount < mTimes)
+                mBehavior.reset();
+    }
+
+    @Override
+    public boolean canStep() {
+        return !isDone() && mBehavior.canStep();
     }
 
     @Override

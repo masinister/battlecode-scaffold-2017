@@ -25,7 +25,7 @@ public strictfp class PredictiveShoot extends Behavior{
      * The first shot is not predictive because it needs 2 turns to calculate velocity based on position
      */
     @Override
-    public void step() throws Exception {
+    public void step() throws GameActionException {
         me=mController.getLocation();
         last = new MapLocation(current.x,current.y);
         current = target.getLocation();

@@ -19,6 +19,5 @@ public class Gardener extends Unit {
                 circleGardener.step();
             Clock.yield();
         }
-        circleGardener.destroy();
     }
 }

@@ -1,8 +1,8 @@
 package boi.units;
 
-import battlecode.common.*;
-import boi.behavior.Repeat;
-import boi.behavior.TryMoveRandomDirection;
+import battlecode.common.Clock;
+import battlecode.common.RobotController;
+import boi.behavior.*;
 
 public class Archon extends Unit {
 
@@ -12,19 +12,15 @@ public class Archon extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        float g = 0;
-        while (!mController.canHireGardener(new Direction(g))){
-            g+=0.1;
-        }
-        mController.hireGardener(new Direction(g));
 
+        Multitask multi = new Multitask(mController);
         Repeat scram = new Repeat(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
+        multi.addTask(scram, 1);
 
-        while (!scram.isDone()) {
-            while (scram.canStep())
-                scram.step();
+        while (!multi.isDone()) {
+            while (multi.canStep())
+                multi.step();
             Clock.yield();
         }
-        scram.destroy();
     }
 }

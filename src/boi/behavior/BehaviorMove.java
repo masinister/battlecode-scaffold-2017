@@ -14,7 +14,7 @@ public strictfp class BehaviorMove extends Behavior {
     }
 
     @Override
-    public void step() throws Exception {
+    public void step() throws GameActionException {
         if (!mController.hasMoved()) {
             MapLocation current = mController.getLocation();
             float remaining = current.distanceTo(mTarget);

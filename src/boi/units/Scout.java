@@ -19,7 +19,6 @@ public class Scout extends Unit {
             scram.step();
             Clock.yield();
         }
-        scram.destroy();
     }
 
 }
