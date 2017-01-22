@@ -1,8 +1,9 @@
-package boi.behavior;
+package boi.behavior.fight;
 
 import battlecode.common.*;
+import boi.behavior.Behavior;
 
-public strictfp class PredictiveShoot extends Behavior{
+public strictfp class PredictiveShoot extends Behavior {
 
     private float bulletSpeed;
     private RobotInfo target;
@@ -25,7 +26,7 @@ public strictfp class PredictiveShoot extends Behavior{
      * The first shot is not predictive because it needs 2 turns to calculate velocity based on position
      */
     @Override
-    public void step() throws Exception {
+    public void step() throws GameActionException {
         me=mController.getLocation();
         last = new MapLocation(current.x,current.y);
         current = target.getLocation();

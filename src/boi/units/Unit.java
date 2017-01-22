@@ -10,7 +10,9 @@ public abstract class Unit {
         mController = rc;
     }
 
-    public void lifetime() throws Exception {}
+    public void lifetime() throws Exception {
+        while (true) ;
+    }
 
     public void destroy() throws Exception {}
 }
