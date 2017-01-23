@@ -1,6 +1,8 @@
-package boi.behavior;
+package boi.behavior.build;
 
 import battlecode.common.*;
+import boi.behavior.Behavior;
+import boi.behavior.Repeatable;
 
 public class Spawn extends Behavior implements Repeatable {
 

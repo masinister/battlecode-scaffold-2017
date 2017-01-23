@@ -1,6 +1,8 @@
-package boi.behavior;
+package boi.behavior.move;
 
 import battlecode.common.*;
+import boi.behavior.Behavior;
+import boi.behavior.Repeatable;
 
 public class TryMoveDirection extends Behavior implements Repeatable {
 

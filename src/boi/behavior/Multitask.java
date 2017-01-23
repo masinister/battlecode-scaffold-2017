@@ -5,6 +5,7 @@ import battlecode.common.RobotController;
 
 import java.util.Comparator;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 
 public class Multitask extends Behavior {
 
@@ -15,18 +16,23 @@ public class Multitask extends Behavior {
         mTasks = new TreeSet<>(Comparator.comparingInt(Task::getPriority));
     }
 
-    public Multitask addTask(Behavior b, int priority) {
-        mTasks.add(new Task(b, priority));
+    public <B extends Behavior> Multitask addTask(B b, int priority, Consumer<B> listener) {
+        mTasks.add(new Task<>(b, priority, listener));
         return this;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void step() throws GameActionException {
         Task t = mTasks.first();
         while (t != null) {
-            final Behavior b = t.mBehavior;
+            Behavior b = t.mBehavior;
             if (b.isDone()) {
                 mTasks.remove(t);
+                if (t.mListener != null)
+                    // b must be the correct type, since it was taken
+                    // from the Task
+                    t.mListener.accept(b);
                 t = mTasks.higher(t);
             } else if (b.canStep()) {
                 b.step();
@@ -48,14 +54,16 @@ public class Multitask extends Behavior {
         return mTasks.isEmpty();
     }
 
-    private static class Task {
+    private static class Task<B extends Behavior> {
 
-        private final Behavior mBehavior;
+        private final B mBehavior;
         private final int mPriority;
+        private final Consumer<B> mListener;
 
-        private Task(Behavior b, int priority) {
+        private Task(B b, int priority, Consumer<B> listener) {
             mBehavior = b;
             mPriority = priority;
+            mListener = listener;
         }
 
         private int getPriority() {

@@ -1,8 +1,9 @@
-package boi.behavior;
+package boi.behavior.fight;
 
 import battlecode.common.*;
+import boi.behavior.Behavior;
 
-public strictfp class PredictiveShoot extends Behavior{
+public strictfp class PredictiveShoot extends Behavior {
 
     private float bulletSpeed;
     private RobotInfo target;

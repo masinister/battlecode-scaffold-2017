@@ -1,4 +1,4 @@
-package boi.behavior;
+package boi.behavior.move;
 
 import battlecode.common.Direction;
 import battlecode.common.RobotController;
