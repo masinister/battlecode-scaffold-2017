@@ -4,6 +4,7 @@ import battlecode.common.*;
 import boi.behavior.Behavior;
 import boi.behavior.Multitask;
 import boi.behavior.Repeat;
+import boi.behavior.build.Spawn;
 import boi.behavior.masonGardener.TryToPlantTree;
 import boi.behavior.masonGardener.WaterTrees;
 import boi.behavior.move.BehaviorMove;
@@ -20,8 +21,11 @@ public class Gardener extends Unit {
         final Multitask garden = new Multitask(mController);
         Repeat water = new Repeat<>(mController,new WaterTrees(mController),Repeat.FOREVER);
         Repeat plant = new Repeat<>(mController,new TryToPlantTree(mController),Repeat.FOREVER);
-        garden.addTask(plant,2,meme -> System.out.println("meme"));
-        garden.addTask(water,1,null);
+        Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.SOLDIER), 4);
+
+        garden.addTask(plant,3,null);
+        garden.addTask(water,2,null);
+        garden.addTask(spawn,1,null);
 
         while (!garden.isDone()){
             while(garden.canStep())
