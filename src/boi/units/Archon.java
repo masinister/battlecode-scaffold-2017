@@ -17,7 +17,8 @@ public class Archon extends Unit {
 
         final Multitask multi = new Multitask(mController);
         Repeat scram = new Repeat<>(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
-        Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.GARDENER), 4);
+        Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.GARDENER), 16);
+
         multi.addTask(spawn, 1, repeat -> System.out.println("Completed: " + repeat));
         multi.addTask(scram, 2, null);
 
