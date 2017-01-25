@@ -15,7 +15,7 @@ public class CircleGarden extends Behavior {
 
     @Override
     public void step() throws GameActionException {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 2; i < 7; i++) {
             Direction d = new Direction((float)(i*Math.PI/3d));
             if(mController.canWater(mController.getLocation().add(d)))
                 mController.water(mController.getLocation().add(d));

@@ -7,6 +7,7 @@ import boi.behavior.Repeat;
 import boi.behavior.build.Spawn;
 import boi.behavior.masonGardener.TryToPlantTree;
 import boi.behavior.masonGardener.WaterTrees;
+import boi.behavior.move.Move;
 
 
 public class Gardener extends Unit {
@@ -17,11 +18,9 @@ public class Gardener extends Unit {
 
     @Override
     public void lifetime() throws GameActionException{
-        TreeInfo[] trees = mController.senseNearbyTrees();
-        if(trees.length>2 && mController.getRoundNum()<100)
+        if(mController.senseNearbyTrees().length>2) {
             spawn(RobotType.LUMBERJACK);
-
-        if(mController.isCircleOccupiedExceptByThisRobot(mController.getLocation(),4*GameConstants.BULLET_TREE_RADIUS+2*RobotType.GARDENER.bodyRadius));
+        }
 
         while (true)
             Clock.yield();
@@ -29,7 +28,9 @@ public class Gardener extends Unit {
 
     private void spawn(RobotType robotType) throws GameActionException {
         Spawn spawn = new Spawn(mController,robotType);
-        if(spawn.canStep())
-            spawn.step();
+        while (!spawn.isDone()) {
+            if (spawn.canStep())
+                spawn.step();
+        }
     }
 }
