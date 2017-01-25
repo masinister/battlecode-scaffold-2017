@@ -2,7 +2,7 @@ package boi.units;
 
 import battlecode.common.*;
 import boi.behavior.Behavior;
-import boi.behavior.fight.Hunting;
+import boi.behavior.fight.FormSquad;
 
 public class Soldier extends Unit {
 
@@ -12,7 +12,7 @@ public class Soldier extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        Behavior hunt = new Hunting(mController);
+        Behavior hunt = new FormSquad(mController);
         while (!hunt.isDone()) {
             while (hunt.canStep())
                 hunt.step();

@@ -17,6 +17,7 @@ public class Gardener extends Unit {
 
     @Override
     public void lifetime() throws Exception {
+
         while (true) {
             float dir = 0;
             while (!mController.canBuildRobot(RobotType.LUMBERJACK, new Direction(dir)))
