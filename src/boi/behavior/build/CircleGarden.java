@@ -15,12 +15,19 @@ public class CircleGarden extends Behavior {
 
     @Override
     public void step() throws GameActionException {
-        for (int i = 2; i < 7; i++) {
-            Direction d = new Direction((float)(i*Math.PI/3d));
-            if(mController.canWater(mController.getLocation().add(d)))
-                mController.water(mController.getLocation().add(d));
-            else if(mController.canPlantTree(d))
+        MapLocation[] archons = mController.getInitialArchonLocations(mController.getTeam().opponent());
+        for (int i = 0; i < 5; i++) {
+            Direction d = mController.getLocation().directionTo(archons[0]).rotateLeftDegrees((float)(i*Math.PI/3));
+            if(mController.canPlantTree(d))
                 mController.plantTree(d);
+        }
+        TreeInfo[] trees = mController.senseNearbyTrees();
+        for (TreeInfo tree : trees){
+            if(mController.canWater(tree.getID())){
+                if(tree.getHealth()<tree.maxHealth*0.9){
+                    mController.water(tree.getID());
+                }
+            }
         }
     }
 
