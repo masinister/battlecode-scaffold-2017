@@ -16,12 +16,14 @@ public class Archon extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-
         final Multitask multi = new Multitask(mController);
         Repeat scram = new Repeat<>(mController, new Move(mController, 90, 3, Move.to(mController.getInitialArchonLocations(mController.getTeam().opponent())[0])), Repeat.FOREVER);
-        Repeat spawn = new Repeat<>(mController, new Spawn(mController, RobotType.GARDENER), 4);
+        Repeat spawn = new Repeat<>(mController, new Spawn(mController, RobotType.GARDENER), Repeat.FOREVER);
         multi.addTask(spawn, 1, repeat -> System.out.println("Completed: " + repeat));
         multi.addTask(scram, 2, repeat -> System.out.println("Done moving"));
+
+        if(spawn.canStep())
+            spawn.step();
 
         while (!multi.isDone()) {
             while (multi.canStep())
