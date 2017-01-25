@@ -47,7 +47,7 @@ public strictfp class PredictiveShoot extends Behavior {
 
     @Override
     public boolean canStep() {
-        return !mController.hasAttacked();
+        return !mController.hasAttacked()&&mController.canSenseRobot(target.getID());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package boi.units;
 
 import battlecode.common.*;
+import boi.behavior.move.Move;
 
 import java.util.Random;
 
@@ -25,11 +26,10 @@ public class Scout extends Unit {
             robots = mController.senseNearbyRobots(10, mController.getTeam().opponent());
             allRobots = mController.senseNearbyRobots(-1, mController.getTeam().opponent());
             if (trees.length == 0) {
-                if (!mController.canMove(mController.getLocation().directionTo(eArchon[0]))) {
-                    while (!mController.canMove(mController.getLocation().directionTo(eArchon[0])))
-                        dir += Math.PI / 12.0;
-                    mController.move(new Direction(dir));
-                } else mController.move(mController.getLocation().directionTo(eArchon[0]));
+                MapLocation location = eArchon[0];
+                Move move = new Move(mController, 10, 1, Move.to(location));
+                if (move.canStep())
+                    move.step();
             } else if (trees.length > 0) {
                 if (robots.length == 0) {
                     closestDistToEArchon = 1000;
@@ -39,8 +39,10 @@ public class Scout extends Unit {
                             closestTreeI = i;
                         }
                     }
-                    if (mController.canMove(mController.getLocation().directionTo(trees[closestTreeI].getLocation())))
-                        mController.move(mController.getLocation().directionTo(trees[closestTreeI].getLocation()));
+                    MapLocation location = trees[closestTreeI].getLocation();
+                    Move move = new Move(mController, 10, 1, Move.to(location));
+                    if (move.canStep())
+                        move.step();
                 } else {
                     float farthestFromEnemy = 0;
                     int farthestTreeI = 0;

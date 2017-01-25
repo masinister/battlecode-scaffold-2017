@@ -1,13 +1,12 @@
 package boi.units;
 
-import battlecode.common.Clock;
-import battlecode.common.RobotController;
+import battlecode.common.*;
 import boi.behavior.Behavior;
 import boi.behavior.ClearTheArea;
 
 public class Lumberjack extends Unit {
 
-    public Lumberjack(RobotController rc) {
+    public Lumberjack(RobotController rc) throws GameActionException {
         super(rc);
     }
 
