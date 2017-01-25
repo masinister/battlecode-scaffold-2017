@@ -22,21 +22,9 @@ public class GetAlone extends Behavior {
         RobotInfo robots[] = mController.senseNearbyRobots();
         if(robots.length>0) {
             MapLocation location = mController.getLocation().add(robots[0].getLocation().directionTo(mController.getLocation()),10);
-            for (RobotInfo robot : robots) {
-                if (robot.getType() == RobotType.LUMBERJACK) {
-                    location = robot.getLocation();
-                    break;
-                }
-            }
-            if(location!=null) {
-                Move move = new Move(mController, 30, 2, Move.to(location));
-                if (move.canStep())
-                    move.step();
-            } else {
-                Move move = new Move(mController, 30, 2, Move::randomly);
-                if (move.canStep())
-                    move.step();
-            }
+            Move move = new Move(mController, 30, 2, Move.to(location));
+            if (move.canStep())
+                move.step();
         }
         else {
             Move move = new Move(mController,45,2,Move::randomly);
