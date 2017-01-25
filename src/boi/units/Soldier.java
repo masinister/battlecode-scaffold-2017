@@ -1,6 +1,8 @@
 package boi.units;
 
 import battlecode.common.*;
+import boi.behavior.Behavior;
+import boi.behavior.fight.Hunting;
 
 public class Soldier extends Unit {
 
@@ -10,7 +12,10 @@ public class Soldier extends Unit {
 
     @Override
     public void lifetime() throws Exception {
-        while (true) {
+        Behavior hunt = new Hunting(mController);
+        while (!hunt.isDone()) {
+            while (hunt.canStep())
+                hunt.step();
             Clock.yield();
         }
     }

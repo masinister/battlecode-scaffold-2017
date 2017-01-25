@@ -15,15 +15,22 @@ public class Archon extends Unit {
     @Override
     public void lifetime() throws Exception {
 
-        final Multitask multi = new Multitask(mController);
-        Repeat scram = new Repeat<>(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
-        Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.GARDENER), 4);
-        multi.addTask(spawn, 1, repeat -> System.out.println("Completed: " + repeat));
-        multi.addTask(scram, 2, null);
-
-        while (!multi.isDone()) {
-            while (multi.canStep())
-                multi.step();
+//        final Multitask multi = new Multitask(mController);
+//        Repeat scram = new Repeat<>(mController, new TryMoveRandomDirection(mController, 20, 3), Repeat.FOREVER);
+//        Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.GARDENER), 4);
+//        multi.addTask(spawn, 1, repeat -> System.out.println("Completed: " + repeat));
+//        multi.addTask(scram, 2, null);
+//
+//        while (!multi.isDone()) {
+//            while (multi.canStep())
+//                multi.step();
+//            Clock.yield();
+//        }
+        float dir = 0;
+        while (!mController.canHireGardener(new Direction(dir)))
+            dir += Math.PI / 3.0;
+        mController.hireGardener(new Direction(dir));
+        while (true) {
             Clock.yield();
         }
     }
