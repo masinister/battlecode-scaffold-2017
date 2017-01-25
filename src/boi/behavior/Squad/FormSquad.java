@@ -2,11 +2,7 @@ package boi.behavior.Squad;
 
 import battlecode.common.*;
 import boi.behavior.Behavior;
-import boi.behavior.Repeat;
-import boi.behavior.Repeatable;
 import boi.behavior.move.Move;
-
-import java.sql.SQLClientInfoException;
 
 /**
  * Created by mason on 1/24/2017.
@@ -19,7 +15,7 @@ public class FormSquad extends Behavior{
     private boolean leading;
     private Move tryMove = new Move(mController,45,2, Move::randomly);
     private MapLocation[] archons = mController.getInitialArchonLocations(mController.getTeam().opponent());
-    private float lastDist;
+    private float lastDist = 0;
 
     public FormSquad(RobotController controller) {
         super(controller);
@@ -69,6 +65,12 @@ public class FormSquad extends Behavior{
         }
         if(tryMove.canStep())
             tryMove.step();
+        if (mController.getLocation().distanceTo(archons[0]) == lastDist && leading == true) {
+            leading = false;
+            mController.broadcast(SQUAD_LEADER_ID,0);
+        }
+        if (mController.getRoundNum() % 10 == 0)
+            lastDist = mController.getLocation().distanceTo(archons[0]);
     }
 
     @Override
