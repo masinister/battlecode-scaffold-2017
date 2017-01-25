@@ -17,7 +17,7 @@ public class ShakeNearbyTrees extends Behavior {
                 for (int i = 0;  i < (nearbyTrees.length); i++){
                     MapLocation tree = nearbyTrees[i].getLocation();
                     while(!mController.canShake(nearbyTrees[i].getID())) {
-                        Behavior moveToTree = new BehaviorMove(mController, tree.x, tree.y);
+                        Behavior moveToTree = new Move(mController, 30,3, Move.to(tree));
                         moveToTree.step();
                     }
                     mController.shake((nearbyTrees[i]).getID());
@@ -27,8 +27,8 @@ public class ShakeNearbyTrees extends Behavior {
             }
 
             else {
-                    Behavior randomStep = new TryMoveRandomDirection(mController, 20, 3);
-                    randomStep.step();
+                Behavior randomStep = new Move(mController,30,3,Move::randomly);
+                randomStep.step();
             }
 
         }

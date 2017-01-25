@@ -4,8 +4,7 @@ import battlecode.common.*;
 import boi.behavior.Behavior;
 import boi.behavior.Repeat;
 import boi.behavior.Repeatable;
-import boi.behavior.move.TryMoveDirection;
-import boi.behavior.move.TryMoveRandomDirection;
+import boi.behavior.move.Move;
 
 import java.sql.SQLClientInfoException;
 
@@ -18,7 +17,7 @@ public class FormSquad extends Behavior{
     private int LEADER_POS_X = 101;
     private int LEADER_POS_Y = 102;
     private boolean leading;
-    private TryMoveDirection tryMove = new TryMoveDirection(mController,new Direction(0),45,2);
+    private Move tryMove = new Move(mController,45,2, Move::randomly);
     private MapLocation[] archons = mController.getInitialArchonLocations(mController.getTeam().opponent());
 
     public FormSquad(RobotController controller) {
@@ -45,7 +44,7 @@ public class FormSquad extends Behavior{
                 mController.broadcastFloat(SQUAD_LEADER_ID,mController.getID());
                 leading=true;
             }
-            tryMove = new TryMoveDirection(mController,mController.getLocation().directionTo(new MapLocation(x,y).add((float)(Math.random()*2*Math.PI),1)),90,2);
+            tryMove = new Move(mController,30,3, Move.to(new MapLocation(x,y)));
         }
         //Lead
         else {
@@ -55,16 +54,16 @@ public class FormSquad extends Behavior{
             mController.broadcastFloat(LEADER_POS_Y,mController.getLocation().y);
 
             if(enemies.length>0){
-                tryMove = new TryMoveDirection(mController,mController.getLocation().directionTo(enemies[0].getLocation()),45,2);
+                tryMove = new Move(mController,30,3,Move.to(enemies[0].getLocation()));
             }
             else if(friends.length>2){
-                tryMove = new TryMoveDirection(mController,mController.getLocation().directionTo(archons[0]),20,3);
+                tryMove = new Move(mController,30,3, Move.to(archons[0]));
             }
             else if(trees.length>0) {
-                tryMove = new TryMoveDirection(mController,trees[0].getLocation().directionTo(mController.getLocation()),45,2);
+                tryMove = new Move(mController,30,3, Move.to(trees[0].getLocation()));
             }
             else {
-                tryMove = new TryMoveDirection(mController,new Direction((float)(Math.random()*2*Math.PI)),45,2);
+                tryMove = new Move(mController,30,3,Move::randomly);
             }
         }
         if(tryMove.canStep())

@@ -6,15 +6,14 @@ import battlecode.common.RobotController;
 import battlecode.common.TreeInfo;
 import boi.behavior.Behavior;
 import boi.behavior.Repeatable;
-import boi.behavior.move.TryMoveDirection;
-import boi.behavior.move.TryMoveRandomDirection;
+import boi.behavior.move.Move;
 
 /**
  * Created by mason on 1/23/2017.
  */
 public class WaterTrees extends Behavior implements Repeatable {
 
-    private Behavior tryMove = new TryMoveRandomDirection(mController,30,3);
+    private Behavior tryMove = new Move(mController,30,3,Move::randomly);
     private TreeInfo[] trees=new TreeInfo[0];
 
     public WaterTrees(RobotController controller) {
@@ -34,9 +33,9 @@ public class WaterTrees extends Behavior implements Repeatable {
             if(mController.canWater(waterTree.getID())) {
                 mController.water(waterTree.getID());
             }
-            else tryMove=new TryMoveDirection(mController, mController.getLocation().directionTo(waterTree.getLocation()),30,3);
+            else tryMove=new Move(mController, 30,3, Move.to(waterTree.getLocation()));
         }
-        else tryMove=new TryMoveRandomDirection(mController,30,2);
+        else tryMove=new Move(mController,30,3,Move::randomly);
 
         if(tryMove.canStep())
             tryMove.step();

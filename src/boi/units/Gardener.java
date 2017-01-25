@@ -7,8 +7,6 @@ import boi.behavior.Repeat;
 import boi.behavior.build.Spawn;
 import boi.behavior.masonGardener.TryToPlantTree;
 import boi.behavior.masonGardener.WaterTrees;
-import boi.behavior.move.BehaviorMove;
-import boi.behavior.move.TryMoveRandomDirection;
 
 public class Gardener extends Unit {
 

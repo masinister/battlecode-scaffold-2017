@@ -5,9 +5,6 @@ import boi.RobotPlayer;
 import boi.behavior.Behavior;
 import boi.behavior.Repeat;
 import boi.behavior.Repeatable;
-import boi.behavior.move.BehaviorMove;
-import boi.behavior.move.TryMoveDirection;
-import boi.behavior.move.TryMoveRandomDirection;
 import boi.units.Gardener;
 
 import java.util.Base64;
