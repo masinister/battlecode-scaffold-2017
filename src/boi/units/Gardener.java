@@ -26,11 +26,11 @@ public class Gardener extends Unit {
             spawn(RobotType.LUMBERJACK);
         }
 
-        GetAlone getAlone = new GetAlone(mController,10);
+        Repeat scram = new Repeat<>(mController, new Move(mController, 90, 3, Move::randomly), 8);
 
-        while (!getAlone.isDone()){
-            if (getAlone.canStep())
-                getAlone.step();
+        while (!scram.isDone()){
+            if (scram.canStep())
+                scram.step();
             Clock.yield();
         }
 
