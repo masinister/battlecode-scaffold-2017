@@ -8,6 +8,7 @@ import boi.behavior.build.Spawn;
 import boi.behavior.masonGardener.TryToPlantTree;
 import boi.behavior.masonGardener.WaterTrees;
 
+
 public class Gardener extends Unit {
 
     public Gardener(RobotController rc) {
@@ -16,19 +17,19 @@ public class Gardener extends Unit {
 
     @Override
     public void lifetime() throws GameActionException{
-        final Multitask garden = new Multitask(mController);
-        Repeat water = new Repeat<>(mController,new WaterTrees(mController),Repeat.FOREVER);
-        Repeat plant = new Repeat<>(mController,new TryToPlantTree(mController),Repeat.FOREVER);
-        Repeat spawn = new Repeat<>(mController, new Spawn(mController, RobotType.SOLDIER, RobotType.LUMBERJACK), 4);
+        TreeInfo[] trees = mController.senseNearbyTrees();
+        if(trees.length>2 && mController.getRoundNum()<100)
+            spawn(RobotType.LUMBERJACK);
 
-        garden.addTask(plant,3,null);
-        garden.addTask(water,2,null);
-        garden.addTask(spawn,1,null);
+        if(mController.isCircleOccupiedExceptByThisRobot(mController.getLocation(),4*GameConstants.BULLET_TREE_RADIUS+2*RobotType.GARDENER.bodyRadius));
 
-        while (!garden.isDone()){
-            while(garden.canStep())
-                garden.step();
+        while (true)
             Clock.yield();
-        }
+    }
+
+    private void spawn(RobotType robotType) throws GameActionException {
+        Spawn spawn = new Spawn(mController,robotType);
+        if(spawn.canStep())
+            spawn.step();
     }
 }
