@@ -26,7 +26,7 @@ public class Gardener extends Unit {
             spawn(RobotType.LUMBERJACK);
         }
 
-        GetAlone getAlone = new GetAlone(mController,4);
+        GetAlone getAlone = new GetAlone(mController,10);
 
         while (!getAlone.isDone()){
             if (getAlone.canStep())
