@@ -1,7 +1,6 @@
 package boi.behavior;
 
-import battlecode.common.GameActionException;
-import battlecode.common.RobotController;
+import battlecode.common.*;
 
 /**
  * A class for implementing modular behavioral code for a given
@@ -28,7 +27,7 @@ public abstract class Behavior {
      * reduces redundancy in checking, which reduces bytecode
      * expenditure.
      *
-     * @throws GameActionException when
+     * @throws GameActionException when something goes wrong
      * @see #canStep()
      */
     public abstract void step() throws GameActionException;
@@ -61,5 +60,22 @@ public abstract class Behavior {
      */
     public boolean isDone() {
         return false;
+    }
+
+    /**
+     * Attempts to run this <tt>Behavior</tt> through to completion.
+     * If {@link #isDone()} never returns true, then this method will
+     * enter an infinite loop and never return. Similarly, if
+     * {@link #canStep()} never returns false, then the method may
+     * loop and never return.
+     *
+     * @throws GameActionException when something goes wrong
+     */
+    public void finish() throws GameActionException {
+        while (!isDone()) {
+            while (canStep())
+                step();
+            Clock.yield();
+        }
     }
 }

@@ -20,11 +20,7 @@ public class Archon extends Unit {
         Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.GARDENER), 4);
         multi.addTask(spawn, 1, repeat -> System.out.println("Completed: " + repeat));
         multi.addTask(scram, 2, repeat -> System.out.println("Done moving"));
-
-        while (!multi.isDone()) {
-            while (multi.canStep())
-                multi.step();
-            Clock.yield();
-        }
+        // Run through to completion (except it will loop forever)
+        multi.finish();
     }
 }
