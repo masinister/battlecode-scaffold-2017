@@ -21,7 +21,7 @@ public class Gardener extends Unit {
         final Multitask garden = new Multitask(mController);
         Repeat water = new Repeat<>(mController,new WaterTrees(mController),Repeat.FOREVER);
         Repeat plant = new Repeat<>(mController,new TryToPlantTree(mController),Repeat.FOREVER);
-        Repeat spawn = new Repeat<>(mController, new Spawn(mController, Direction.getNorth(), RobotType.SOLDIER), 4);
+        Repeat spawn = new Repeat<>(mController, new Spawn(mController, RobotType.SOLDIER, RobotType.LUMBERJACK), 4);
 
         garden.addTask(plant,3,null);
         garden.addTask(water,2,null);
