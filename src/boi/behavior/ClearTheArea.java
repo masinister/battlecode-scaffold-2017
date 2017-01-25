@@ -10,7 +10,7 @@ import java.util.Random;
 public class ClearTheArea extends Behavior {
 
     private float dir = 0, initDir = 0;
-    private double toRads = 45.0;
+    private double toRads = 15.0;
     private int treeI = 0;
     private boolean chopping = false;
     private TreeInfo[] trees;
@@ -33,6 +33,8 @@ public class ClearTheArea extends Behavior {
             }
         }
         if (trees.length > 0) {
+            if (trees.length > 5)
+                mController.broadcast(2000, mController.getRoundNum());
             if (mController.canChop(trees[treeI].getID()))
                 chopping = true;
         }
