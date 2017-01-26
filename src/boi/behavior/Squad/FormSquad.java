@@ -9,9 +9,9 @@ import boi.behavior.move.Move;
  */
 public class FormSquad extends Behavior{
 
-    private int SQUAD_LEADER_ID = 100;
-    private int LEADER_POS_X = 101;
-    private int LEADER_POS_Y = 102;
+    private final int SQUAD_LEADER_ID = 100;
+    private final int LEADER_POS_X = 101;
+    private final int LEADER_POS_Y = 102;
     private boolean leading;
     private Move tryMove = new Move(mController,45,2, Move::randomly);
     private MapLocation[] archons = mController.getInitialArchonLocations(mController.getTeam().opponent());
@@ -29,7 +29,7 @@ public class FormSquad extends Behavior{
         TreeInfo[] trees = mController.senseNearbyTrees();
 
         //If there is no leader, become one
-        if(leaderID==0){
+        if(leaderID == 0){
             leading=true;
             mController.broadcast(SQUAD_LEADER_ID,mController.getID());
         }
@@ -41,7 +41,7 @@ public class FormSquad extends Behavior{
                 mController.broadcastFloat(SQUAD_LEADER_ID,mController.getID());
                 leading=true;
             }
-            tryMove = new Move(mController,30,3, Move.to(new MapLocation(x,y)));
+            tryMove = new Move(mController,40,3, Move.to(new MapLocation(x,y)));
         }
         //Lead
         else {
@@ -69,7 +69,7 @@ public class FormSquad extends Behavior{
             leading = false;
             mController.broadcast(SQUAD_LEADER_ID,0);
         }
-        if (mController.getRoundNum() % 10 == 0)
+        if (mController.getRoundNum() % 25 == 0 && leading == true)
             lastDist = mController.getLocation().distanceTo(archons[0]);
     }
 

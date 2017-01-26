@@ -62,7 +62,7 @@ public class ClearTheArea extends Behavior {
                 }
                 if (dir >= 2.0 * Math.PI) {
                     dir = 0;
-                    toRads += 30.0;
+                    toRads += 40.0;
                 }
             } else {
                 if (mController.canMove(mController.getLocation().directionTo(allrobots[0].getLocation())))
